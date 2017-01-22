@@ -224,10 +224,12 @@ class GetHandler(BaseHTTPRequestHandler):
 def handleArgs():
 	parser = argparse.ArgumentParser(version=hostinfo.__version__, formatter_class=argparse.RawDescriptionHelpFormatter,
 	description="""
-Launches a server that reports host information via a static web page.
+Launches a server that reports host information via a static web page. Example:
+
+	infoserver.py -p 8800 -e en0 -q
 """)
 
-	parser.add_argument('-e', '--ethernet', help='ethernet interface, default is ether0', default='eth0')
+	parser.add_argument('-e', '--ethernet', help='ethernet interface, default is eth0', default='eth0')
 	parser.add_argument('-p', '--port', help='port, default is 9000', type=int, default=9000)
 	parser.add_argument('-q', '--qr', help='display a QR code of the host info', action='store_true')
 

@@ -35,14 +35,39 @@ For development you can also do::
 Usage
 ------
 
+Now in order to determine your ip and mac address, you need to supply an
+interface. You can also supply a port to serve up the webpage. To speed up
+things, generating a QR code is off by default.
+
 ::
 
-	infoserver.py --port 8800
+	kevin@Logan hostinfo $ infoserver.py --help
+	usage: infoserver.py [-h] [-v] [-e ETHERNET] [-p PORT] [-q]
+
+	Launches a server that reports host information via a static web page. Example:
+
+		infoserver.py -p 8800 -e en0 -q
+
+	optional arguments:
+	  -h, --help            show this help message and exit
+	  -v, --version         show program's version number and exit
+	  -e ETHERNET, --ethernet ETHERNET
+	                        ethernet interface, default is eth0
+	  -p PORT, --port PORT  port, default is 9000
+	  -q, --qr              display a QR code of the host info
+
+QR Reader
+-------------
+
+A sample view of a qr reader on my iPhone.
+
+.. image:: pics/qr_reader.png
+	:align: center
 
 ToDo
 ------
 
-- embed linux-font
+- embed linux-font so computers w/o access to the internet can get the pretty pictures
 
 Changes
 --------
