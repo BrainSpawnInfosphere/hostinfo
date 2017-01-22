@@ -44,7 +44,7 @@ Changes
 =============  ========  ======
 Date           Version   Notes
 =============  ========  ======
-22 Jan 16      0.0.1     init
+22 Jan 167     0.0.1     init
 =============  ========  ======
 
 License
@@ -52,7 +52,7 @@ License
 
 **The MIT License (MIT)**
 
-Copyright (c) 2016 Kevin J. Walchko
+Copyright (c) 2017 Kevin J. Walchko
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
