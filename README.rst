@@ -39,6 +39,10 @@ Usage
 
 	infoserver.py --port 8800
 
+ToDo
+------
+
+- embed linux-font
 
 Changes
 --------

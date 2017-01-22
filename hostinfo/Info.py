@@ -10,6 +10,7 @@ import cpuinfo
 
 
 class HostInfo(object):
+	TB = 2**40
 	GB = 2**30
 	MB = 2**20
 	KB = 2**10
@@ -18,6 +19,7 @@ class HostInfo(object):
 		self.iface = iface
 		self.system = platform.system()
 		self.info = cpuinfo.get_cpu_info()
+		self.macaddr = None
 
 	def get(self):
 		info = [
@@ -38,6 +40,8 @@ class HostInfo(object):
 		disks = self.disks()
 		for d in disks:
 			info.append(d)
+
+		print(info)
 
 		return {'data': info}
 
@@ -66,28 +70,49 @@ class HostInfo(object):
 			# if d.mountpoint == '/dev/mmcblk0p1':
 			# 	continue
 			p = ps.disk_usage(d.mountpoint)
-			if d.fstype != 'vfat':
-				ret.append([d.device, '{} {} / {} GB'.format(d.fstype, p.used // self.GB, p.total // self.GB)])
+			# if d.fstype != 'vfat':
+			# ret.append([d.device, '{} {} / {} GB'.format(d.fstype, p.used // self.GB, p.total // self.GB)])
+			if p.total > self.TB:
+				ret.append([d.mountpoint, '{} {} / {} TB'.format(d.fstype, p.used // self.TB, p.total // self.TB)])
+			elif p.total > self.GB:
+				ret.append([d.mountpoint, '{} {} / {} GB'.format(d.fstype, p.used // self.GB, p.total // self.GB)])
+			elif p.total > self.MB:
+				ret.append([d.mountpoint, '{} {} / {} MB'.format(d.fstype, p.used // self.MB, p.total // self.MB)])
+			else:
+				ret.append([d.mountpoint, '{} {} / {} B'.format(d.fstype, p.used, p.total)])
 		return ret
 
+	# def ram(self):
+	# 	ram = ps.virtual_memory()
+	# 	used = ram.used // self.GB
+	# 	total = ram.total // self.GB
+	# 	if total == 0:
+	# 		used = ram.used // self.MB
+	# 		total = ram.total // self.MB
+	# 		return '{} / {} MB'.format(used, total)
+	# 	return '{} / {} GB'.format(used, total)
 	def ram(self):
 		ram = ps.virtual_memory()
-		used = ram.used // self.GB
-		total = ram.total // self.GB
-		if total == 0:
-			used = ram.used // self.MB
-			total = ram.total // self.MB
-			return '{} / {} MB'.format(used, total)
-		return '{} / {} GB'.format(used, total)
+		used = ram.used
+		total = ram.total
+		if total > self.GB:
+			used = used // self.GB
+			total = total // self.GB
+			s = '{} / {} GB'.format(used, total)
+		else:
+			used = used // self.MB
+			total = total // self.MB
+			s = '{} / {} MB'.format(used, total)
+		return s
 
 	def mac(self):
-		mac = ''
-		dev = self.iface
-		if self.system == 'Darwin':
-			mac = commands.getoutput("ifconfig " + dev + "| grep ether | awk '{ print $2 }'")
-		else:
-			mac = commands.getoutput("ifconfig " + dev + "| grep HWaddr | awk '{ print $5 }'")
-		return mac
+		if self.macaddr is None:
+			if self.system == 'Darwin':
+				self.macaddr = commands.getoutput("ifconfig " + self.iface + "| grep ether | awk '{ print $2 }'")
+			else:
+				self.macaddr = commands.getoutput("ifconfig " + self.iface + "| grep HWaddr | awk '{ print $5 }'")
+
+		return self.macaddr
 
 	def ipv4(self):
 		ipv4 = socket.gethostbyname(platform.node())

@@ -7,11 +7,12 @@ from BaseHTTPServer import HTTPServer
 from BaseHTTPServer import BaseHTTPRequestHandler
 from simplehtml import HTML
 import qrcode
-import platform
+# import platform
 from hostinfo import HostInfo
 import hostinfo
 import argparse
 import os
+import datetime as dt
 
 
 css = """
@@ -47,14 +48,24 @@ footer {
 }
 a {
 	display: inline-block;
-	margin: 0 40px;
+	# margin: 0 40px;
 	text-decoration: none;
 	color: #ffffff;
-	text-transform: uppercase;
-	font-size: 12px;
+	# text-transform: uppercase;
+	# font-size: 12px;
+	text-align: center;
 }
 p {
 	text-align: center;
+}
+.stamp {
+	position: absolute;
+	top: 0px;
+	right: 10px;
+	color: #ffffff;
+}
+.container {
+	position: relative;
 }
 """
 
@@ -87,9 +98,49 @@ class QRCode(object):
 			arch=info[3][1],
 			ram=info[7][1].split(' / ')[1]
 		)
+		disks = []
+		for i in info:
+			if i[0].find('/') >= 0:
+				disks.append(' '.join(i))
+		print('disks', disks)
+		txt = txt + '\n' + '\n'.join(disks)
 		qr.add_data(txt)
 		qr.make(fit=True)
 		return qr.make_image()._repr_png_()
+
+
+def getOSImage(distro):
+	"""
+	linux_distribution(distname='', version='', id='', supported_dists=('SuSE',
+	'debian', 'fedora', 'redhat', 'centos', 'mandrake', 'mandriva', 'rocks',
+	'slackware', 'yellowdog', 'gentoo', 'UnitedLinux', 'turbolinux', 'Ubuntu'),
+	full_distribution_name=1)
+	"""
+	distro = distro.lower()
+	# distro = 'blah fedora'  # testing
+	ret = ''
+	if distro.find('macos') >= 0:
+		ret = '<i class="fl-apple fl-72" style="color: #555555"></i>'
+	elif distro.find('debian') >= 0:
+		ret = '<i class="fl-debian fl-72" style="color: red"></i>'
+	elif distro.find('redhat') >= 0:
+		ret = '<i class="fl-redhat fl-72" style="color: red"></i>'
+	elif distro.find('slackware') >= 0:
+		ret = '<i class="fl-slackware fl-72" style="color: SLATEBLUE"></i>'
+	elif distro.find('gentoo') >= 0:
+		ret = '<i class="fl-gentoo fl-72" style="color: PLUM"></i>'
+	elif distro.find('suse') >= 0:
+		ret = '<i class="fl-opensuse fl-72" style="color: green"></i>'
+	elif distro.find('centos') >= 0:
+		ret = '<i class="fl-centos fl-72" style="color: PURPLE"></i>'
+	elif distro.find('ubuntu') >= 0:
+		ret = '<i class="fl-ubuntu fl-72" style="color: ORANGERED"></i>'
+	elif distro.find('fedora') >= 0:
+		ret = '<i class="fl-fedora fl-72" style="color: blue"></i>'
+	else:
+		ret = '<i class="fl-linux fl-72" style="color: black"></i>'
+
+	return ret
 
 
 def generator():
@@ -106,18 +157,11 @@ def generator():
 
 	html = HTML()
 	html.linuxFont()
+	# html.('<link href="/assets/stylesheets/font-linux.css" rel="stylesheet">')
 
 	html.css(css)
 
-	sys = platform.system()
-	if sys == 'Darwin':
-		html.p('<i class="fl-apple fl-72" style="color: #555555"></i>')
-	elif sys == 'Linux':
-		s = platform.linux_distribution()
-		if s[0] == 'debian':
-			html.p('<i class="fl-debian fl-72" style="color: red"></i>')
-		else:
-			html.p('<i class="fl-linux fl-72" style="color: black"></i>')
+	html.p(getOSImage(data['data'][1][1]))
 
 	host = data['data'].pop(0)
 	html.h1(host[1])
@@ -126,7 +170,8 @@ def generator():
 	if QR:
 		html.img('qr.png', width='300px')
 
-	html.footer('<a href="http://github.com/walchko/hostinfo"><i class="fl-github fl-24"></i></a>')
+	now = dt.datetime.now()
+	html.footer('<div class="container"><a href="http://github.com/walchko/hostinfo"><i class="fl-github fl-24"></i></a> <div class="stamp">{}</div></div>'.format(now.ctime()))
 
 	return html
 
@@ -182,7 +227,7 @@ def handleArgs():
 Launches a server that reports host information via a static web page.
 """)
 
-	parser.add_argument('-e', '--ethernet', help='ethernet interface, default is ether0', default='ether0')
+	parser.add_argument('-e', '--ethernet', help='ethernet interface, default is ether0', default='eth0')
 	parser.add_argument('-p', '--port', help='port, default is 9000', type=int, default=9000)
 	parser.add_argument('-q', '--qr', help='display a QR code of the host info', action='store_true')
 
