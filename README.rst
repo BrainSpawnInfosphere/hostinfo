@@ -2,6 +2,8 @@
 hostinfo
 =========
 
+.. image:: bob
+	:align: center
 
 .. image:: https://travis-ci.org/walchko/hostinfo.svg?branch=master
     :target: https://travis-ci.org/walchko/hostinfo
