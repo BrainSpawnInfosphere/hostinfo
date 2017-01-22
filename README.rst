@@ -5,6 +5,8 @@ hostinfo
 .. image:: https://raw.githubusercontent.com/walchko/hostinfo/master/pics/example.png
 	:align: center
 
+
+
 .. image:: https://travis-ci.org/walchko/hostinfo.svg?branch=master
     :target: https://travis-ci.org/walchko/hostinfo
 	:alt: Travis-ci
@@ -63,6 +65,7 @@ A sample view of a qr reader on my iPhone.
 
 .. image:: https://github.com/walchko/hostinfo/blob/master/pics/qr_reader.png?raw=true
 	:align: center
+	:width: 300px
 
 ToDo
 ------
