@@ -61,7 +61,7 @@ QR Reader
 
 A sample view of a qr reader on my iPhone.
 
-.. image:: pics/qr_reader.png
+.. image:: https://github.com/walchko/hostinfo/blob/master/pics/qr_reader.png?raw=true
 	:align: center
 
 ToDo
