@@ -32,7 +32,7 @@ setup(
 		'Topic :: System :: Shells',
 		'Environment :: Console'
 	],
-	install_requires=['psutil', 'py-cpuinfo', 'simplehtml', 'simplejson'],
+	install_requires=['psutil', 'py-cpuinfo', 'simplehtml', 'simplejson', 'qrcode', 'pillow'],
 	url="https://github.com/walchko/hostinfo",
 	long_description=open('README.rst').read(),
 	cmdclass={

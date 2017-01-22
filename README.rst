@@ -22,7 +22,7 @@ hostinfo
 Install
 --------
 
-The preferred way is to use `pypi.org <https://pypi.python.org/pypi>`_ ::
+The preferred way is to use ``pip`` with `pypi.org <https://pypi.python.org/pypi>`_ ::
 
     pip install hostinfo
 
@@ -46,7 +46,8 @@ Changes
 =============  ========  ======
 Date           Version   Notes
 =============  ========  ======
-22 Jan 167     0.0.1     init
+22 Jan 17      0.2.0     bug fixes
+21 Jan 17      0.1.0     init
 =============  ========  ======
 
 License

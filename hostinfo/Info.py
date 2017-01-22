@@ -24,7 +24,6 @@ class HostInfo(object):
 			['host', platform.node()],
 			[self.os(), self.release()],
 			['CPU:', self.cpu()],
-			# ['Arch:', platform.machine()],
 			['Arch:', self.arch()],
 			['Load:', self.load()],
 			['Compiler:', platform.python_compiler()],
@@ -45,7 +44,6 @@ class HostInfo(object):
 	def release(self):
 		if self.system == 'Darwin':
 			s = platform.mac_ver()
-			# rel = '{} {}'.format(s[0], s[2])
 			rel = s[0]
 		elif self.system == 'Linux':
 			s = platform.linux_distribution()
@@ -65,19 +63,30 @@ class HostInfo(object):
 		disks = ps.disk_partitions()
 		ret = []
 		for d in disks:
+			# if d.mountpoint == '/dev/mmcblk0p1':
+			# 	continue
 			p = ps.disk_usage(d.mountpoint)
-			ret.append([d.device, '{} {} / {} GB'.format(d.fstype, p.used // self.GB, p.total // self.GB)])
+			if d.fstype != 'vfat':
+				ret.append([d.device, '{} {} / {} GB'.format(d.fstype, p.used // self.GB, p.total // self.GB)])
 		return ret
 
 	def ram(self):
 		ram = ps.virtual_memory()
 		used = ram.used // self.GB
 		total = ram.total // self.GB
+		if total == 0:
+			used = ram.used // self.MB
+			total = ram.total // self.MB
+			return '{} / {} MB'.format(used, total)
 		return '{} / {} GB'.format(used, total)
 
 	def mac(self):
+		mac = ''
 		dev = self.iface
-		mac = commands.getoutput("ifconfig " + dev + "| grep ether | awk '{ print $2 }'")
+		if self.system == 'Darwin':
+			mac = commands.getoutput("ifconfig " + dev + "| grep ether | awk '{ print $2 }'")
+		else:
+			mac = commands.getoutput("ifconfig " + dev + "| grep HWaddr | awk '{ print $5 }'")
 		return mac
 
 	def ipv4(self):
