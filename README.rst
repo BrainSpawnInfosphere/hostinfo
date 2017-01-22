@@ -2,7 +2,7 @@
 hostinfo
 =========
 
-.. image:: bob
+.. image:: https://raw.githubusercontent.com/walchko/hostinfo/master/pics/example.png
 	:align: center
 
 .. image:: https://travis-ci.org/walchko/hostinfo.svg?branch=master
