@@ -67,6 +67,46 @@ A sample view of a qr reader on my iPhone.
 	:align: center
 	:width: 300px
 
+Raspbian [Debian Jessie] Service
+-----------------------------------
+
+Now you can create a service that will always start up when the computer boots::
+
+	pi@bender hostinfo $ more /etc/systemd/system/hostinfo.service
+	[Service]
+	ExecStart=/usr/local/bin/infoserver.py -p 8080 -e eth0 -q
+	Restart=always
+	StandardOutput=syslog
+	StandardError=syslog
+	SyslogIdentifier=hostinfo
+	User=pi
+	Group=pi
+	Environment=NODE_ENV=production
+
+	[Install]
+	WantedBy=multi-user.target
+
+Change the port, ethernet interface, and desire to generate a QR code to your
+liking. Once you create this file, you need to do::
+
+	pi@bender hostinfo $ sudo systemctl enable hostinfo
+	Created symlink from /etc/systemd/system/multi-user.target.wants/hostinfo.service to /etc/systemd/system/hostinfo.service.
+
+	pi@bender hostinfo $ sudo service hostinfo start
+
+	pi@bender hostinfo $ sudo service hostinfo status
+	● hostinfo.service
+	   Loaded: loaded (/etc/systemd/system/hostinfo.service; enabled)
+	   Active: active (running) since Sun 2017-01-22 13:14:26 MST; 7s ago
+	 Main PID: 28533 (infoserver.py)
+	   CGroup: /system.slice/hostinfo.service
+	           └─28533 /usr/bin/python /usr/local/bin/infoserver.py -p 8080 -e et...
+
+	Jan 22 13:14:26 bender systemd[1]: Started hostinfo.service.
+
+Now just launch a browser and connect to ``computer:port`` for example
+``bender.local:8080`` because that is what I set it too above.
+
 ToDo
 ------
 
@@ -78,7 +118,7 @@ Changes
 =============  ========  ======
 Date           Version   Notes
 =============  ========  ======
-22 Jan 17      0.2.0     bug fixes
+22 Jan 17      0.2.1     bug fixes, working on macOS and Raspbian
 21 Jan 17      0.1.0     init
 =============  ========  ======
 
