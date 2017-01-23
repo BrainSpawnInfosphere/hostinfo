@@ -7,7 +7,6 @@ from BaseHTTPServer import HTTPServer
 from BaseHTTPServer import BaseHTTPRequestHandler
 from simplehtml import HTML
 import qrcode
-# import platform
 from hostinfo import HostInfo
 import hostinfo
 import argparse
@@ -16,6 +15,7 @@ import datetime as dt
 import pkg_resources
 
 
+# The CSS for the webpage
 css = """
 h1 {
 	text-align: center;
@@ -77,6 +77,9 @@ ETHER = None
 
 
 class QRCode(object):
+	"""
+	Given a computer's info, this will generate a QR image.
+	"""
 	template = [
 		'Host: {host}',
 		'OS: {os}',
@@ -111,6 +114,9 @@ class QRCode(object):
 
 def getOSImage(distro):
 	"""
+	Looking at the output of platform.linux_distribution or platform.mac_ver, this
+	returns the correct font-linux icon.
+	
 	linux_distribution(distname='', version='', id='', supported_dists=('SuSE',
 	'debian', 'fedora', 'redhat', 'centos', 'mandrake', 'mandriva', 'rocks',
 	'slackware', 'yellowdog', 'gentoo', 'UnitedLinux', 'turbolinux', 'Ubuntu'),
@@ -143,6 +149,9 @@ def getOSImage(distro):
 
 
 def generator():
+	"""
+	This generates the webpage.
+	"""
 	global ETHER
 	ci = HostInfo(iface=ETHER)
 	data = ci.get()
@@ -251,3 +260,5 @@ if __name__ == '__main__':
 	print ('Starting server on port: ' + str(port) + ', use <Ctrl-C> to stop')
 	server = HTTPServer(('0.0.0.0', port), GetHandler)
 	server.serve_forever()
+	
+	print('Good bye')
