@@ -1,15 +1,19 @@
 
 from __future__ import print_function
 from __future__ import division
-import commands      # get mac
-import platform
-import psutil as ps
+import commands         # get mac and ip addr
+import platform         # gets host info
+import psutil as ps     # gets host info
 import datetime as dt
 import socket
 import cpuinfo
 
 
 class HostInfo(object):
+	"""
+	This collects info on a host computer and generates a dictionary
+	of it.
+	"""
 	TB = 2**40
 	GB = 2**30
 	MB = 2**20
@@ -40,8 +44,6 @@ class HostInfo(object):
 		disks = self.disks()
 		for d in disks:
 			info.append(d)
-
-		# print(info)
 
 		return {'data': info}
 
