@@ -21,6 +21,10 @@ hostinfo
     :alt: License
 
 
+
+**Why?** I have several headless Raspberry Pi's doing things and I wanted a simple cross
+platform way to see what they are up too.
+
 Install
 --------
 
@@ -39,7 +43,7 @@ Usage
 
 Now in order to determine your ip and mac address, you need to supply an
 interface. You can also supply a port to serve up the webpage. To speed up
-things, generating a QR code is off by default.
+things, generating a QR code is **off** by default.
 
 ::
 
@@ -104,8 +108,9 @@ liking. Once you create this file, you need to do::
 
 	Jan 22 13:14:26 bender systemd[1]: Started hostinfo.service.
 
-Now just launch a browser and connect to ``computer:port`` for example
-``bender.local:8080`` because that is what I set it too above.
+Now that the server is up and running, just launch a browser and connect
+to ``computer:port``. For example, ``bender.local:8080`` because that is
+what I set it too above.
 
 Changes
 --------
@@ -113,7 +118,7 @@ Changes
 =============  ========  ======
 Date           Version   Notes
 =============  ========  ======
-22 Jan 17      0.2.1     bug fixes, working on macOS and Raspbian
+22 Jan 17      0.2.1     bug fixes, working on macOS and Raspbian.
 21 Jan 17      0.1.0     init
 =============  ========  ======
 
