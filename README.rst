@@ -2,9 +2,6 @@
 hostinfo
 =========
 
-.. image:: https://api.codacy.com/project/badge/Grade/0e28e971366e4abfaf79c668d19d8356
-   :alt: Codacy Badge
-   :target: https://www.codacy.com/app/kevin-walchko/hostinfo?utm_source=github.com&utm_medium=referral&utm_content=walchko/hostinfo&utm_campaign=badger
 
 .. image:: https://raw.githubusercontent.com/walchko/hostinfo/master/pics/example.png
 	:align: center
@@ -23,7 +20,9 @@ hostinfo
 .. image:: https://img.shields.io/pypi/l/hostinfo.svg
     :target: https://pypi.python.org/pypi/hostinfo/
     :alt: License
-
+.. image:: https://api.codacy.com/project/badge/Grade/0e28e971366e4abfaf79c668d19d8356
+   :alt: Codacy Badge
+   :target: https://www.codacy.com/app/kevin-walchko/hostinfo?utm_source=github.com&utm_medium=referral&utm_content=walchko/hostinfo&utm_campaign=badger
 
 
 **Why?** I have several headless Raspberry Pi's doing things and I wanted a simple cross
