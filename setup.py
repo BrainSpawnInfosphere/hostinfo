@@ -19,6 +19,11 @@ setup(
 	author_email="kevin.walchko@outlook.com",
 	description="A simple python http server to display basic system information.",
 	license="MIT",
+	package_data={
+		'hostinfo': ['assets/*'],
+	},
+	include_package_data=True,
+	zip_safe=False,
 	classifiers=[
 		'Development Status :: 4 - Beta',
 		'License :: OSI Approved :: MIT License',
@@ -39,11 +44,6 @@ setup(
 		'publish': PublishCommand
 	},
 	packages=["hostinfo"],
-	# entry_points={
-	# 	'console_scripts': [
-	# 		'hostinfo=hostinfo.server:main',
-	# 	],
-	# },
 	scripts=[
 		'hostinfo/infoserver.py'
 	]

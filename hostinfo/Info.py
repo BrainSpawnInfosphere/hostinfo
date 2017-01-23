@@ -41,7 +41,7 @@ class HostInfo(object):
 		for d in disks:
 			info.append(d)
 
-		print(info)
+		# print(info)
 
 		return {'data': info}
 
@@ -82,15 +82,6 @@ class HostInfo(object):
 				ret.append([d.mountpoint, '{} {} / {} B'.format(d.fstype, p.used, p.total)])
 		return ret
 
-	# def ram(self):
-	# 	ram = ps.virtual_memory()
-	# 	used = ram.used // self.GB
-	# 	total = ram.total // self.GB
-	# 	if total == 0:
-	# 		used = ram.used // self.MB
-	# 		total = ram.total // self.MB
-	# 		return '{} / {} MB'.format(used, total)
-	# 	return '{} / {} GB'.format(used, total)
 	def ram(self):
 		ram = ps.virtual_memory()
 		used = ram.used

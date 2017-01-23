@@ -13,6 +13,7 @@ import hostinfo
 import argparse
 import os
 import datetime as dt
+import pkg_resources
 
 
 css = """
@@ -102,7 +103,6 @@ class QRCode(object):
 		for i in info:
 			if i[0].find('/') >= 0:
 				disks.append(' '.join(i))
-		print('disks', disks)
 		txt = txt + '\n' + '\n'.join(disks)
 		qr.add_data(txt)
 		qr.make(fit=True)
@@ -117,9 +117,8 @@ def getOSImage(distro):
 	full_distribution_name=1)
 	"""
 	distro = distro.lower()
-	# distro = 'blah fedora'  # testing
-	ret = ''
-	if distro.find('macos') >= 0:
+	ret = ' '
+	if distro.find('macos') >= 0 or distro.find('darwin') >= 0:
 		ret = '<i class="fl-apple fl-72" style="color: #555555"></i>'
 	elif distro.find('debian') >= 0:
 		ret = '<i class="fl-debian fl-72" style="color: red"></i>'
@@ -156,12 +155,12 @@ def generator():
 			png = qr.create(data['data'])
 
 	html = HTML()
-	html.linuxFont()
-	# html.('<link href="/assets/stylesheets/font-linux.css" rel="stylesheet">')
+	html.cssLink('font-linux.css')
 
 	html.css(css)
 
-	html.p(getOSImage(data['data'][1][1]))
+	os_name = ' '.join(data['data'][1])
+	html.p(getOSImage(os_name))
 
 	host = data['data'].pop(0)
 	html.h1(host[1])
@@ -177,37 +176,42 @@ def generator():
 
 
 class GetHandler(BaseHTTPRequestHandler):
-
+	# http://stackoverflow.com/questions/40867447/python-simple-http-server-not-loading-font-awesome-fonts
 	def do_GET(self):
+		global png
+
+		print('path >> ', self.path)
 		if self.path == '/':
+			self.path = 'index.html'
+
+		try:
+			ext = self.path.split('.')[1]
+			mimetype = {
+				'html': 'text/html',
+				'css':  'text/css',
+				'woff': 'application/font-woff',
+				'ttf':  'application/x-font-ttf',
+				'eot':  'application/vnd.ms-fontobject',
+				'svg':  'image/svg+xml',
+				'png':  'image/png'
+			}
+
 			self.send_response(200)
-			self.send_header('Content-type', 'text/html')
+			self.send_header('Content-type', mimetype[ext])
 			self.end_headers()
 
-			html = generator()
-
-			self.wfile.write(html)
-
-		elif self.path.rfind('.png') > 1:
-			self.send_response(200)
-			self.send_header('Content-type', 'image/png')
-			self.end_headers()
-
-			if self.path == '/qr.png':
-
-				global QR
-				if QR:
-					global png
-					if png:
-						self.wfile.write(png)
+			if ext == 'png':
+				self.wfile.write(png)
+			elif ext == 'html':
+				html = generator()
+				self.wfile.write(html)
 			else:
-				fname = self.path[1:]
-				fd = open('./'+fname)
-				im = fd.read()
-				fd.close()
+				DATA_PATH = pkg_resources.resource_filename('hostinfo', 'assets/font-linux.' + ext)
+				im = open(DATA_PATH).read()
 				self.wfile.write(im)
 
-		else:
+		except (IOError, IndexError, KeyError):
+			print('404 >> ', self.path)
 			self.send_response(404)
 			self.send_header('Content-type', 'text/html')
 			self.end_headers()
@@ -218,7 +222,7 @@ class GetHandler(BaseHTTPRequestHandler):
 			html.h1('404')
 			html.p('File not found: ' + self.path)
 
-			self.wfile.write(str(html))
+			self.wfile.write(html)
 
 
 def handleArgs():

@@ -107,11 +107,6 @@ liking. Once you create this file, you need to do::
 Now just launch a browser and connect to ``computer:port`` for example
 ``bender.local:8080`` because that is what I set it too above.
 
-ToDo
-------
-
-- embed linux-font so computers w/o access to the internet can get the pretty pictures
-
 Changes
 --------
 
