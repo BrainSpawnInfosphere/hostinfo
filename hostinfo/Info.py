@@ -36,6 +36,7 @@ class HostInfo(object):
 			['Python:', platform.python_version()],
 			['Memory:', self.ram()],
 			['IPv4:', self.ipv4()],
+			['IPv6:', self.ipv6()],
 			['MAC:', self.mac()],
 			['Uptime:', self.uptime()],
 			['Processes:', str(len(ps.pids())) + ' running'],
@@ -108,10 +109,25 @@ class HostInfo(object):
 		return self.macaddr
 
 	def ipv4(self):
-		ipv4 = socket.gethostbyname(platform.node())
-		if ipv4.split('.')[0] == '127':
-			ipv4 = socket.gethostbyname(platform.node() + '.local')
+		if self.system == 'Darwin':
+			ipv4 = commands.getoutput("ifconfig " + self.iface + " | grep 'inet ' | awk '{ print $2 }'")
+		else:
+			ipv4 = commands.getoutput("ifconfig " + self.iface + " | grep 'inet addr' | awk '{ print $2 }'")
+			ipv4 = ipv4.split(':')[1]
+
+		# ipv4 = socket.gethostbyname(platform.node())
+		# if ipv4.split('.')[0] == '127':
+		# 	ipv4 = socket.gethostbyname(platform.node() + '.local')
 		return ipv4
+
+	def ipv6(self):
+		if self.system == 'Darwin':
+			ipv6 = commands.getoutput("ifconfig " + self.iface + "| grep inet6 | awk '{ print $2 }'")
+		else:
+			ipv6 = commands.getoutput("ifconfig " + self.iface + "| grep inet6 | awk '{ print $3 }'")
+		# result = socket.getaddrinfo(host, port, socket.AF_INET6)
+		# return result[0][4][0]
+		return ipv6
 
 	def load(self):
 		return str(ps.cpu_percent(interval=1, percpu=True))
