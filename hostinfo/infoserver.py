@@ -5,7 +5,7 @@ from __future__ import print_function
 from __future__ import division
 from BaseHTTPServer import HTTPServer
 from BaseHTTPServer import BaseHTTPRequestHandler
-from simplehtml import HTML
+from simplehtml import HTML5
 import qrcode
 from hostinfo import HostInfo
 import hostinfo
@@ -163,7 +163,7 @@ def generator():
 			qr = QRCode()
 			png = qr.create(data['data'])
 
-	html = HTML()
+	html = HTML5()
 	html.cssLink('font-linux.css')
 
 	html.css(css)
@@ -225,7 +225,7 @@ class GetHandler(BaseHTTPRequestHandler):
 			self.send_header('Content-type', 'text/html')
 			self.end_headers()
 
-			html = HTML()
+			html = HTML5()
 			html.css('h1 {text-align: center;}')
 			html.css('p {text-align: center;}')
 			html.h1('404')
