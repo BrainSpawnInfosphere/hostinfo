@@ -5,6 +5,7 @@ from __future__ import print_function
 from __future__ import division
 from BaseHTTPServer import HTTPServer
 from BaseHTTPServer import BaseHTTPRequestHandler
+# from http.server import BaseHTTPRequestHandler, HTTPServer
 from simplehtml import HTML5
 import qrcode
 from hostinfo import HostInfo
@@ -116,7 +117,7 @@ def getOSImage(distro):
 	"""
 	Looking at the output of platform.linux_distribution or platform.mac_ver, this
 	returns the correct font-linux icon.
-	
+
 	linux_distribution(distname='', version='', id='', supported_dists=('SuSE',
 	'debian', 'fedora', 'redhat', 'centos', 'mandrake', 'mandriva', 'rocks',
 	'slackware', 'yellowdog', 'gentoo', 'UnitedLinux', 'turbolinux', 'Ubuntu'),
@@ -260,5 +261,5 @@ if __name__ == '__main__':
 	print ('Starting server on port: ' + str(port) + ', use <Ctrl-C> to stop')
 	server = HTTPServer(('0.0.0.0', port), GetHandler)
 	server.serve_forever()
-	
+
 	print('Good bye')
