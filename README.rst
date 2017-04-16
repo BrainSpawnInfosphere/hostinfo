@@ -36,6 +36,7 @@ For development you can also do::
 
 	git clone https://github.com/walchko/hostinfo.git
 	cd hostinfo
+	pip install -r requirements.txt
 	pip install -e .
 
 Usage

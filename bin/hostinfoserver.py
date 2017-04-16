@@ -27,12 +27,6 @@ Launches a server that reports host information via a static web page. Example:
 
 	return vars(parser.parse_args())
 
-#
-# args = handleArgs()
-#
-# templates = pkg_resources.resource_filename('hostinfo', 'templates')
-# static = pkg_resources.resource_filename('hostinfo', 'static')
-
 
 def generator(en):
 	"""
