@@ -2,10 +2,11 @@ language: python
 sudo: false
 python:
   - "2.7"
+  - "3.6"
 # command to install dependencies
 install:
     - pip install -U pip setuptools wheel
-    - pip install psutil simplejson simplehtml py-cpuinfo
+    - pip install .
 # command to run tests
 # script: nosetests -v test.py
 script: True
