@@ -1,1 +1,2 @@
-include hostinfo/assets/*
+include hostinfo/static/*
+include hostinfo/templates/*
