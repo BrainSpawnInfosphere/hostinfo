@@ -14,9 +14,6 @@ hostinfo
 .. image:: https://img.shields.io/pypi/v/hostinfo.svg
     :target: https://pypi.python.org/pypi/hostinfo/
     :alt: Latest Version
-.. image:: https://img.shields.io/pypi/dm/hostinfo.svg
-    :target: https://pypi.python.org/pypi/hostinfo/
-    :alt: Downloads
 .. image:: https://img.shields.io/pypi/l/hostinfo.svg
     :target: https://pypi.python.org/pypi/hostinfo/
     :alt: License
@@ -33,13 +30,13 @@ Install
 
 The preferred way is to use ``pip`` with `pypi.org <https://pypi.python.org/pypi>`_ ::
 
-    pip install hostinfo
+	pip install hostinfo
 
 For development you can also do::
 
-    git clone https://github.com/walchko/hostinfo.git
-    cd hostinfo
-    pip install -e .
+	git clone https://github.com/walchko/hostinfo.git
+	cd hostinfo
+	pip install -e .
 
 Usage
 ------
@@ -60,10 +57,8 @@ things, generating a QR code is **off** by default.
 	optional arguments:
 	  -h, --help            show this help message and exit
 	  -v, --version         show program's version number and exit
-	  -e ETHERNET, --ethernet ETHERNET
-	                        ethernet interface, default is eth0
-	  -p PORT, --port PORT  port, default is 9000
-	  -q, --qr              display a QR code of the host info
+	  -e ETHERNET, --ethernet ETHERNET ethernet interface, default is eth0
+	  -p PORT, --port PORT  port, default is 5000
 
 QR Reader
 -------------
@@ -121,8 +116,9 @@ Changes
 =============  ========  ======
 Date           Version   Notes
 =============  ========  ======
-22 Jan 17      0.2.1     bug fixes, working on macOS and Raspbian.
-21 Jan 17      0.1.0     init
+2017-04-15     0.5.0      using flask and support python 3.6
+2017-01-22      0.2.1     bug fixes, working on macOS and Raspbian.
+2017-01-21      0.1.0     init
 =============  ========  ======
 
 License

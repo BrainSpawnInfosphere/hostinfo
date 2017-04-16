@@ -1,12 +1,58 @@
-
 from __future__ import print_function
 from __future__ import division
-import commands         # get mac and ip addr
 import platform         # gets host info
 import psutil as ps     # gets host info
 import datetime as dt
-import socket
+# import socket
 import cpuinfo
+
+from platform import python_version
+import subprocess
+# from build_utils import python_version
+
+
+def getOSImage(distro):
+	"""
+	Looking at the output of platform.linux_distribution or platform.mac_ver, this
+	returns the correct font-linux icon.
+
+	linux_distribution(distname='', version='', id='', supported_dists=('SuSE',
+	'debian', 'fedora', 'redhat', 'centos', 'mandrake', 'mandriva', 'rocks',
+	'slackware', 'yellowdog', 'gentoo', 'UnitedLinux', 'turbolinux', 'Ubuntu'),
+	full_distribution_name=1)
+	"""
+	distro = distro.lower()
+	ret = ' '
+	if distro.find('macos') >= 0 or distro.find('darwin') >= 0:
+		ret = ('apple', '#555555')
+	elif distro.find('debian') >= 0:
+		ret = ('debian', 'red')
+	elif distro.find('redhat') >= 0:
+		ret = ('redhat', 'red')
+	elif distro.find('slackware') >= 0:
+		ret = ('slackware', 'SLATEBLUE')
+	elif distro.find('gentoo') >= 0:
+		ret = ('gentoo', 'PLUM')
+	elif distro.find('suse') >= 0:
+		ret = ('opensuse', 'green')
+	elif distro.find('centos') >= 0:
+		ret = ('centos', 'purple')
+	elif distro.find('ubuntu') >= 0:
+		ret = ('ubuntu', 'orangered')
+	elif distro.find('fedora') >= 0:
+		ret = ('fedora', 'blue')
+	else:
+		ret = ('linux', 'black')
+
+	return ret
+
+
+if python_version().split('.')[0] == '2':
+	def getoutput(cmd):
+		return subprocess.check_output([cmd], shell=True)
+else:
+	def getoutput(cmd):
+		return subprocess.getoutput(cmd)
 
 
 class HostInfo(object):
@@ -102,17 +148,17 @@ class HostInfo(object):
 	def mac(self):
 		if self.macaddr is None:
 			if self.system == 'Darwin':
-				self.macaddr = commands.getoutput("ifconfig " + self.iface + "| grep ether | awk '{ print $2 }'")
+				self.macaddr = getoutput("ifconfig " + self.iface + "| grep ether | awk '{ print $2 }'")
 			else:
-				self.macaddr = commands.getoutput("ifconfig " + self.iface + "| grep HWaddr | awk '{ print $5 }'")
+				self.macaddr = getoutput("ifconfig " + self.iface + "| grep HWaddr | awk '{ print $5 }'")
 
 		return self.macaddr
 
 	def ipv4(self):
 		if self.system == 'Darwin':
-			ipv4 = commands.getoutput("ifconfig " + self.iface + " | grep 'inet ' | awk '{ print $2 }'")
+			ipv4 = getoutput("ifconfig " + self.iface + " | grep 'inet ' | awk '{ print $2 }'")
 		else:
-			ipv4 = commands.getoutput("ifconfig " + self.iface + " | grep 'inet addr' | awk '{ print $2 }'")
+			ipv4 = getoutput("ifconfig " + self.iface + " | grep 'inet addr' | awk '{ print $2 }'")
 			ipv4 = ipv4.split(':')[1]
 
 		# ipv4 = socket.gethostbyname(platform.node())
@@ -122,9 +168,9 @@ class HostInfo(object):
 
 	def ipv6(self):
 		if self.system == 'Darwin':
-			ipv6 = commands.getoutput("ifconfig " + self.iface + "| grep inet6 | awk '{ print $2 }'")
+			ipv6 = getoutput("ifconfig " + self.iface + "| grep inet6 | awk '{ print $2 }'")
 		else:
-			ipv6 = commands.getoutput("ifconfig " + self.iface + "| grep inet6 | awk '{ print $3 }'")
+			ipv6 = getoutput("ifconfig " + self.iface + "| grep inet6 | awk '{ print $3 }'")
 		# result = socket.getaddrinfo(host, port, socket.AF_INET6)
 		# return result[0][4][0]
 		return ipv6
@@ -149,11 +195,10 @@ class HostInfo(object):
 		return ret
 
 	def packages(self):
-		ret = ''
 		if self.system == 'Darwin':
-			pkgs = commands.getoutput('brew list').split('\n')
+			pkgs = getoutput('brew list').split('\n')
 			ret = 'brew {} installed'.format(len(pkgs))
 		elif self.system == 'Linux':
-			pkgs = commands.getoutput('dpkg -l').split('\n')
+			pkgs = getoutput('dpkg -l').split('\n')
 			ret = 'apt-get {} installed'.format(len(pkgs))
 		return ret
