@@ -97,4 +97,4 @@ if __name__ == '__main__':
 	# global host_data
 	host_data = generator(args['ethernet'])
 
-	app.run(port=int(args['port']))
+	app.run(host='0.0.0.0', port=int(args['port']))
