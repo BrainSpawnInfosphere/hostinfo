@@ -42,32 +42,23 @@ Usage
 ------
 
 Now in order to determine your ip and mac address, you need to supply an
-interface. You can also supply a port to serve up the webpage. To speed up
-things, generating a QR code is **off** by default.
+interface. You can also supply a port to serve up the webpage.
 
 ::
 
-	kevin@Logan hostinfo $ infoserver.py --help
-	usage: infoserver.py [-h] [-v] [-e ETHERNET] [-p PORT] [-q]
+	kevin@Logan hostinfo $ bin/hostinfoserver.py -h
+	usage: hostinfoserver.py [-h] [-e ETHERNET] [-p PORT] [-i IP] [--version]
 
 	Launches a server that reports host information via a static web page. Example:
-
-		infoserver.py -p 8800 -e en0 -q
+		hostinfoserver.py -p 8800 -e en0
 
 	optional arguments:
 	  -h, --help            show this help message and exit
-	  -v, --version         show program's version number and exit
-	  -e ETHERNET, --ethernet ETHERNET ethernet interface, default is eth0
-	  -p PORT, --port PORT  port, default is 5000
-
-QR Reader
--------------
-
-A sample view of a qr reader on my iPhone.
-
-.. image:: https://github.com/walchko/hostinfo/blob/master/pics/qr_reader.png?raw=true
-	:align: center
-	:width: 300px
+	  -e ETHERNET, --ethernet ETHERNET
+	                        ethernet interface, default is eth0
+	  -p PORT, --port PORT  port, default is 9000
+	  -i IP, --ip IP        host ip address, default is 0.0.0.0
+	  --version             show program's version number and exit
 
 Raspbian [Debian Jessie] Service
 -----------------------------------
@@ -76,7 +67,7 @@ Now you can create a service that will always start up when the computer boots::
 
 	pi@bender hostinfo $ more /etc/systemd/system/hostinfo.service
 	[Service]
-	ExecStart=/usr/local/bin/infoserver.py -p 8080 -e eth0 -q
+	ExecStart=/usr/local/bin/hostinfoserver.py -p 8080 -e eth0 -q
 	Restart=always
 	StandardOutput=syslog
 	StandardError=syslog
@@ -116,15 +107,13 @@ Changes
 =============  ========  ======
 Date           Version   Notes
 =============  ========  ======
-2017-04-15     0.5.0      using flask and support python 3.6
-2017-01-22      0.2.1     bug fixes, working on macOS and Raspbian.
-2017-01-21      0.1.0     init
+2017-04-15     0.5.0     using flask, python 3.6 support, no QR images
+2017-01-22     0.2.1     bug fixes, working on macOS and Raspbian.
+2017-01-21     0.1.0     init
 =============  ========  ======
 
-License
-----------
-
-**The MIT License (MIT)**
+MIT License
+---------------
 
 Copyright (c) 2017 Kevin J. Walchko
 

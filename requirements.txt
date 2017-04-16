@@ -1,0 +1,5 @@
+psutil
+py-cpuinfo
+flask
+simplejson
+build_utils
