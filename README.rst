@@ -48,7 +48,7 @@ interface. You can also supply a port to serve up the webpage.
 	usage: hostinfoserver.py [-h] [-e ETHERNET] [-p PORT] [-i IP] [--version]
 
 	Launches a server that reports host information via a static web page. Example:
-		hostinfoserver.py -p 8800 -e en0
+		hostinfoserver.py -p 8800 -e en0 -h logan.local
 
 	optional arguments:
 	  -h, --help            show this help message and exit
@@ -57,6 +57,16 @@ interface. You can also supply a port to serve up the webpage.
 	  -p PORT, --port PORT  port, default is 9000
 	  -i IP, --ip IP        host ip address, default is 0.0.0.0
 	  --version             show program's version number and exit
+
+
+Now typically for the ``--ethernet`` option, I use:
+
+- **en0**: on macOS for wifi
+- **en1**: on macOS for wired ethernet
+- **eth0**: on Raspberry Pi 2/3 for wired ethernet
+- **usb0**: on Raspberry Pi Zero for usb RNDIS/Ethernet Gadet
+- **wlan0**: on Raspberry Pi 2/3/Zero for wireless
+
 
 Raspbian [Debian Jessie] Service
 -----------------------------------
