@@ -14,9 +14,6 @@ hostinfo
 .. image:: https://img.shields.io/pypi/v/hostinfo.svg
     :target: https://pypi.python.org/pypi/hostinfo/
     :alt: Latest Version
-.. image:: https://img.shields.io/pypi/dm/hostinfo.svg
-    :target: https://pypi.python.org/pypi/hostinfo/
-    :alt: Downloads
 .. image:: https://img.shields.io/pypi/l/hostinfo.svg
     :target: https://pypi.python.org/pypi/hostinfo/
     :alt: License
