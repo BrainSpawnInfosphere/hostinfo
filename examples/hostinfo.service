@@ -1,0 +1,12 @@
+[Service]
+ExecStart=/usr/local/bin/hostinfoserver.py -p 8080 -e eth0
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=hostinfo
+User=pi
+Group=pi
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
