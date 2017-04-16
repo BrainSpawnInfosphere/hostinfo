@@ -1,6 +1,5 @@
 from __future__ import print_function
 from __future__ import division
-# import commands         # get mac and ip addr
 import platform         # gets host info
 import psutil as ps     # gets host info
 import datetime as dt
@@ -25,34 +24,24 @@ def getOSImage(distro):
 	distro = distro.lower()
 	ret = ' '
 	if distro.find('macos') >= 0 or distro.find('darwin') >= 0:
-		# ret = '<i class="fl-apple fl-72" style="color: #555555"></i>'
 		ret = ('apple', '#555555')
 	elif distro.find('debian') >= 0:
-		# ret = '<i class="fl-debian fl-72" style="color: red"></i>'
 		ret = ('debian', 'red')
 	elif distro.find('redhat') >= 0:
-		# ret = '<i class="fl-redhat fl-72" style="color: red"></i>'
 		ret = ('redhat', 'red')
 	elif distro.find('slackware') >= 0:
-		# ret = '<i class="fl-slackware fl-72" style="color: SLATEBLUE"></i>'
 		ret = ('slackware', 'SLATEBLUE')
 	elif distro.find('gentoo') >= 0:
-		# ret = '<i class="fl-gentoo fl-72" style="color: PLUM"></i>'
 		ret = ('gentoo', 'PLUM')
 	elif distro.find('suse') >= 0:
-		# ret = '<i class="fl-opensuse fl-72" style="color: green"></i>'
 		ret = ('opensuse', 'green')
 	elif distro.find('centos') >= 0:
-		# ret = '<i class="fl-centos fl-72" style="color: PURPLE"></i>'
 		ret = ('centos', 'purple')
 	elif distro.find('ubuntu') >= 0:
-		# ret = '<i class="fl-ubuntu fl-72" style="color: ORANGERED"></i>'
 		ret = ('ubuntu', 'orangered')
 	elif distro.find('fedora') >= 0:
-		# ret = '<i class="fl-fedora fl-72" style="color: blue"></i>'
 		ret = ('fedora', 'blue')
 	else:
-		# ret = '<i class="fl-linux fl-72" style="color: black"></i>'
 		ret = ('linux', 'black')
 
 	return ret

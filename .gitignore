@@ -4,6 +4,5 @@
 *.pyc
 dist
 build
-*.html
-*.png
 misc/
+__pychache__

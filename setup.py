@@ -39,7 +39,7 @@ setup(
 		'Topic :: System :: Shells',
 		'Environment :: Console'
 	],
-	install_requires=['psutil', 'py-cpuinfo', 'flask', 'simplejson'],
+	install_requires=['psutil', 'py-cpuinfo', 'flask', 'simplejson', 'build_utils'],
 	url="https://github.com/walchko/{}".format(PACKAGE_NAME),
 	long_description=README,
 	cmdclass={

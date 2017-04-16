@@ -119,8 +119,9 @@ Changes
 =============  ========  ======
 Date           Version   Notes
 =============  ========  ======
-22 Jan 17      0.2.1     bug fixes, working on macOS and Raspbian.
-21 Jan 17      0.1.0     init
+2017-04-15     0.5.0      using flask and support python 3.6
+2017-01-22      0.2.1     bug fixes, working on macOS and Raspbian.
+2017-01-21      0.1.0     init
 =============  ========  ======
 
 License
