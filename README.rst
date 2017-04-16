@@ -1,16 +1,13 @@
 
-hostinfo
-=========
-
-
 .. image:: https://raw.githubusercontent.com/walchko/hostinfo/master/pics/example.png
 	:align: center
 
-
+hostinfo
+=========
 
 .. image:: https://travis-ci.org/walchko/hostinfo.svg?branch=master
     :target: https://travis-ci.org/walchko/hostinfo
-	:alt: Travis-ci
+    :alt: Travis-ci
 .. image:: https://img.shields.io/pypi/v/hostinfo.svg
     :target: https://pypi.python.org/pypi/hostinfo/
     :alt: Latest Version
@@ -68,7 +65,7 @@ Now you can create a service that will always start up when the computer boots::
 
 	pi@bender hostinfo $ more /etc/systemd/system/hostinfo.service
 	[Service]
-	ExecStart=/usr/local/bin/hostinfoserver.py -p 8080 -e eth0 -q
+	ExecStart=/usr/local/bin/hostinfoserver.py -p 8080 -e eth0
 	Restart=always
 	StandardOutput=syslog
 	StandardError=syslog
