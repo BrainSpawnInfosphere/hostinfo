@@ -21,6 +21,7 @@ Launches a server that reports host information via a static web page. Example:
 """)
 	parser.add_argument('-e', '--ethernet', help='ethernet interface, default is eth0', default='eth0')
 	parser.add_argument('-p', '--port', help='port, default is 9000', type=int, default=5000)
+	parser.add_argument('-i', '--ip', help='host ip address, default is 0.0.0.0', default='0.0.0.0')
 	parser.add_argument('--version', action='version', version=hostinfo.__version__)
 	# parser.add_argument('-q', '--qr', help='display a QR code of the host info', action='store_true')
 
@@ -97,4 +98,4 @@ if __name__ == '__main__':
 	# global host_data
 	host_data = generator(args['ethernet'])
 
-	app.run(host='0.0.0.0', port=int(args['port']))
+	app.run(host=args['ip'], port=int(args['port']))
